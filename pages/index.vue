@@ -92,7 +92,7 @@
                   <v-toolbar-title>รายละเอียดข้อมูลร้านค้า</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
-                <v-container>
+                <v-container class="mt-3 mb-3">
                   <v-row>
                     <v-col cols="12" md="6">
                       <h3>ชื่อร้านค้า : {{ detail_Store.store_name }}</h3>
@@ -110,148 +110,134 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <hr class="style5">
+                <hr class="style5" />
                 <div>
-                  <h2 class="pl-2">ข้อมูลสินค้าทั้งหมดที่อยู่ในร้านค้า</h2>
-                  <!-- <v-simple-table height="300px">
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">ชื่อสินค้า</th>
-                          <th class="text-left">รายละเอียดสินค้า</th>
-                          <th class="text-left">ราคาสินค้า</th>
-                          <th class="text-left">หน่วยสินค้า</th>
-                          <th>ตัวเลือก</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(item, i) in products" :key="i">
-                          <td>{{ item.product_name }}</td>
-                          <td>{{ item.detail }}</td>
-                          <td>{{ item.price }}</td>
-                          <td>{{ item.unit }}</td>
-                          <td>
-                            <v-icon small class="mr-2" @click="editItem(item)">
+                  <h2 class="ml-5 mt-3">ข้อมูลสินค้าทั้งหมดที่อยู่ในร้านค้า</h2>
+
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" md="12">
+                        <v-data-table
+                          :headers="headers2"
+                          :items="products"
+                          class="elevation-1"
+                        >
+                          <template v-slot:top>
+                            <v-toolbar flat>
+                              <v-toolbar-title
+                                >ข้อมูลสินค้าทั้งหมด</v-toolbar-title
+                              >
+                              <v-divider
+                                class="mx-4"
+                                inset
+                                vertical
+                              ></v-divider>
+                              <v-spacer></v-spacer>
+                              <v-dialog v-model="dialog2" max-width="500px">
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn
+                                    color="success"
+                                    dark
+                                    class="mb-2"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  >
+                                    <v-icon>mdi-package-variant-plus</v-icon>
+                                    เพิ่มสินค้า
+                                  </v-btn>
+                                </template>
+                                <v-card>
+                                  <v-card-title>
+                                    <span class="text-h5">เพิ่มสินค้า</span>
+                                  </v-card-title>
+
+                                  <v-card-text>
+                                    <v-container>
+                                      <v-row>
+                                        <v-col cols="12" sm="6" md="7">
+                                          <v-text-field
+                                            v-model="productForm.product_name"
+                                            label="ชื่อสินค้า"
+                                          ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="5">
+                                          <v-text-field
+                                            v-model="productForm.price"
+                                            type="number"
+                                            label="ราคาสินค้า"
+                                          ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="12">
+                                          <v-text-field
+                                            v-model="productForm.detail"
+                                            label="รายละเอียดสินค้า"
+                                          ></v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="12">
+                                          <v-text-field
+                                            v-model="productForm.unit"
+                                            label="หน่วยสินค้า"
+                                          ></v-text-field>
+                                        </v-col>
+                                        <v-col class="d-flex" cols="12" sm="6">
+                                          <v-select
+                                            v-model="
+                                              productForm.id_product_cate
+                                            "
+                                            :items="productsCate"
+                                            item-text="category_name"
+                                            item-value="id"
+                                            label="หมวดหมู่สินค้า"
+                                          ></v-select>
+                                        </v-col>
+                                      </v-row>
+                                    </v-container>
+                                  </v-card-text>
+
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="blue darken-1"
+                                      text
+                                      @click="close"
+                                    >
+                                      ยกเลิก
+                                    </v-btn>
+                                    <v-btn
+                                      color="blue darken-1"
+                                      text
+                                      @click="createProduct(detail_Store.id)"
+                                    >
+                                      บันทึก
+                                    </v-btn>
+                                  </v-card-actions>
+                                </v-card>
+                              </v-dialog>
+                            </v-toolbar>
+                          </template>
+                          <template v-slot:item.actions="{ item }">
+                            <v-icon
+                              small
+                              class="mr-2"
+                              @click="editProduct(item)"
+                              style="font-size: 25px"
+                            >
                               mdi-pencil
                             </v-icon>
                             <v-icon
                               small
-                              @click="
-                                detailStore(item), getProductInStore(item)
-                              "
+                              color="red"
+                              @click="deleteItem(item)"
+                              style="font-size: 25px"
                             >
                               mdi-delete
                             </v-icon>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table> -->
-                  <v-data-table
-                    :headers="headers2"
-                    :items="products"
-                    class="elevation-1"
-                  >
-                    <template v-slot:top>
-                      <v-toolbar flat>
-                        <v-toolbar-title>ข้อมูลสินค้าทั้งหมด</v-toolbar-title>
-                        <v-divider class="mx-4" inset vertical></v-divider>
-                        <v-spacer></v-spacer>
-                        <v-dialog v-model="dialog2" max-width="500px">
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                              color="success"
-                              dark
-                              class="mb-2"
-                              v-bind="attrs"
-                              v-on="on"
-                            >
-                              <v-icon>mdi-package-variant-plus</v-icon> เพิ่มสินค้า
-                            </v-btn>
                           </template>
-                          <v-card>
-                            <v-card-title>
-                              <span class="text-h5">เพิ่มสินค้า</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                              <v-container>
-                                <v-row>
-                                  <v-col cols="12" sm="6" md="7">
-                                    <v-text-field
-                                      v-model="productForm.product_name"
-                                      label="ชื่อสินค้า"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="5">
-                                    <v-text-field
-                                      v-model="productForm.price"
-                                      type="number"
-                                      label="ราคาสินค้า"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="12">
-                                    <v-text-field
-                                      v-model="productForm.detail"
-                                      label="รายละเอียดสินค้า"
-                                    ></v-text-field>
-                                  </v-col>
-
-                                  <v-col cols="12" sm="6" md="12">
-                                    <v-text-field
-                                      v-model="productForm.unit"
-                                      label="หน่วยสินค้า"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col class="d-flex" cols="12" sm="6">
-                                    <v-select
-                                      v-model="productForm.id_product_cate"
-                                      :items="productsCate"
-                                      item-text="category_name"
-                                      item-value="id"
-                                      label="หมวดหมู่สินค้า"
-                                    ></v-select>
-                                  </v-col>
-                                </v-row>
-                              </v-container>
-                            </v-card-text>
-
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="blue darken-1" text @click="close">
-                                ยกเลิก
-                              </v-btn>
-                              <v-btn
-                                color="blue darken-1"
-                                text
-                                @click="createProduct(detail_Store.id)"
-                              >
-                                บันทึก
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-dialog>
-                      </v-toolbar>
-                    </template>
-                    <template v-slot:item.actions="{ item }">
-                      <v-icon
-                        small
-                        class="mr-2"
-                        @click="editProduct(item)"
-                        style="font-size: 25px"
-                      >
-                        mdi-pencil
-                      </v-icon>
-                      <v-icon
-                        small
-                        color="red"
-                        @click="deleteItem(item)"
-                        style="font-size: 25px"
-                      >
-                        mdi-delete
-                      </v-icon>
-                    </template>
-                  </v-data-table>
+                        </v-data-table>
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </div>
               </v-card>
             </v-dialog>
@@ -612,7 +598,7 @@ export default {
 </script>
 <style>
 hr.style5 {
-	background-color: #fff;
-	border-top: 2px dashed #8c8b8b;
+  background-color: #fff;
+  border-top: 2px dashed #8c8b8b;
 }
 </style>

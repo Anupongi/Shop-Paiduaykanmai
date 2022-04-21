@@ -1,12 +1,6 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      
-      :clipped="clipped"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -26,7 +20,8 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <img src="~/static/logo.png" alt="" />
+      <v-toolbar-title v-text="title" class="pl-2" />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -62,16 +57,18 @@ export default {
 }
 </script>
 <style>
-.v-application--wrap , .v-dialog{
+.v-application--wrap,
+.v-dialog,.v-menu__content {
   font-family: 'Prompt', sans-serif !important;
 }
-.v-application .text-h5{
+.v-application .text-h5 {
   font-family: 'Prompt', sans-serif !important;
 }
 .v-data-table {
   width: 100%;
 }
-td {
-  text-overflow: ellipsis;
+th {
+  color: #ffffff !important;
+  background-color: #1976d2 !important;
 }
 </style>
